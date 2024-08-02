@@ -2,10 +2,17 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createTask } from '../redux/actions/taskActions';
+import {
+    useCreateTask,
+    useAllTasks,
+    useGetDropdownOptions,
+} from "@/shared/hooks/useTask";
 import { useRouter } from 'next/router';
 
 const CreateTask = () => {
+    const [task, addData] = useCreateTask();
+    const { add_task_loading } = task;
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const dispatch = useDispatch();
@@ -13,7 +20,7 @@ const CreateTask = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(createTask({ title, description }));
+        dispatch(addData({ title, description }));
         router.push('/');
     };
 
